@@ -1,0 +1,51 @@
+version: '3'
+
+volumes:
+  portfolio_max_local_postgres_data: {}
+  portfolio_max_local_postgres_data_backups: {}
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/local/django/Dockerfile
+    image: portfolio_max_local_django
+    container_name: portfolio_max_local_django
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app:z
+    env_file:
+      - ./.envs/.local/.django
+      - ./.envs/.local/.postgres
+    ports:
+      - '8000:8000'
+    command: /start
+
+  postgres:
+    build:
+      context: .
+      dockerfile: ./compose/production/postgres/Dockerfile
+    image: portfolio_max_production_postgres
+    container_name: portfolio_max_local_postgres
+    volumes:
+      - portfolio_max_local_postgres_data:/var/lib/postgresql/data
+      - portfolio_max_local_postgres_data_backups:/backups
+    env_file:
+      - ./.envs/.local/.postgres
+
+  docs:
+    image: portfolio_max_local_docs
+    container_name: portfolio_max_local_docs
+    build:
+      context: .
+      dockerfile: ./compose/local/docs/Dockerfile
+    env_file:
+      - ./.envs/.local/.django
+    volumes:
+      - ./docs:/docs:z
+      - ./config:/app/config:z
+      - ./portfolio_max:/app/portfolio_max:z
+    ports:
+      - '9000:9000'
+    command: /start-docs
