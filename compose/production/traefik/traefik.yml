@@ -13,7 +13,7 @@ entryPoints:
 
   web-secure:
     # https
-    address: ':444'
+    address: ':443'
 
 certificatesResolvers:
   letsencrypt:
