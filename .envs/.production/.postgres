@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=portfolio-max
+POSTGRES_USER=Colonize5538
+POSTGRES_PASSWORD=Epileptic-Finite6-Shirt
