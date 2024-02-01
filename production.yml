@@ -32,10 +32,10 @@ services:
       - web
       - django-max
     labels:
-      - traefik.http.routers.django-johanna.rule=Host(`max-zimmermann.online`)
-      - traefik.http.routers.django-johanna.tls=true
-      - traefik.http.routers.django-johanna.tls.certresolver=le-resolver
-      - traefik.port=5000
+      - traefik.http.routers.django-max.rule=Host(`max-zimmermann.online`)
+      - traefik.http.routers.django-max.tls=true
+      - traefik.http.routers.django-max.tls.certresolver=le-resolver
+      - traefik.services.django-max.loadbalancer.server.port=5000
       - traefik.http.middlewares.csrf.headers.hostsproxyheaders='X-CSRFToken'
 
   postgres:
@@ -74,4 +74,4 @@ services:
       - web
     labels:
       - traefik.enable=true
-      - traefik.port=80
+      - traefik.services.django-max.loadbalancer.server.port=80
