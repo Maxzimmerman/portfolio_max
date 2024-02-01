@@ -37,6 +37,8 @@ services:
       - traefik.http.routers.django-max.tls.certresolver=le-resolver
       - traefik.services.django-max.loadbalancer.server.port=5000
       - traefik.http.middlewares.csrf.headers.hostsproxyheaders='X-CSRFToken'
+    ports:
+      - 5000:5000
 
   postgres:
     build:
