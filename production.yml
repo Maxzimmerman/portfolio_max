@@ -36,6 +36,7 @@ services:
       - traefik.http.routers.django-johanna.tls=true
       - traefik.http.routers.django-johanna.tls.certresolver=le-resolver
       - traefik.port=5000
+      - traefik.http.middlewares.csrf.headers.hostsproxyheaders='X-CSRFToken'
 
   postgres:
     build:
@@ -70,5 +71,7 @@ services:
       - production_django_media:/usr/share/nginx/media:ro
     networks:
       - django-max
+      - web
     labels:
-      - traefik.enable=false
+      - traefik.enable=true
+      - traefik.port=80
