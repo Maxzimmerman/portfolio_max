@@ -12,7 +12,6 @@ entryPoints:
           to: web-secure
 
   web-secure:
-    # https
     address: ':443'
 
 certificatesResolvers:
