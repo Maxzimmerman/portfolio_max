@@ -80,6 +80,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "portfolio_max.users",
+    "kurvendiskussion"
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

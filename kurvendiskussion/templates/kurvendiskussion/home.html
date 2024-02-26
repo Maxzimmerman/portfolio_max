@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <style>
+    .calc {
+      border: 1px solid red;
+    }
+  </style>
+
+  <h1>Kurvendiskussion</h1>
+
+  <div class="calc">
+    <div class="calc-input">
+      <input id="input-field" type="text">
+    </div>
+    <div class="buttons">
+      <button value="7" class="btn btn-dark button">7</button>
+      <button value="8" class="btn btn-dark button">8</button>
+      <button value="9" class="btn btn-dark button">9</button>
+      <button value="*" class="btn btn-dark button">x</button>
+      <button value="/" class="btn btn-dark button">÷</button>
+      <button value="4" class="btn btn-dark button">4</button>
+      <button value="5" class="btn btn-dark button">5</button>
+      <button value="6" class="btn btn-dark button">6</button>
+      <button value="+" class="btn btn-dark button">+</button>
+      <button value="-" class="btn btn-dark button">-</button>
+      <button value="1" class="btn btn-dark button">1</button>
+      <button value="2" class="btn btn-dark button">2</button>
+      <button value="3" class="btn btn-dark button">3</button>
+      <button value="=" class="btn btn-dark button">=</button>
+      <button value="" class="btn btn-dark button"><-</button>
+      <button value="" class="btn btn-dark button">0</button>
+      <button value="" class="btn btn-dark button">.</button>
+      <button value="" class="btn btn-dark button"><</button>
+      <button value="" class="btn btn-dark button"><</button>
+      <button value="" class="btn btn-dark button"><-</button>
+    </div>
+  </div>
+  <script>
+    const input_field = document.querySelector('#input-field');
+    const buttons = document.querySelectorAll('.button');
+
+    buttons.forEach(button => {
+
+      button.addEventListener('click', () => {
+        input_field.value += button.value;
+      })
+    })
+  </script>
+{% endblock %}
