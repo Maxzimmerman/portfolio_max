@@ -1,19 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <style>
-    .calc {
-      border: 1px solid red;
-    }
-  </style>
 
   <h1>Kurvendiskussion</h1>
 
-  <div class="calc">
+  <form class="calc" hx-post="{% url 'home_view' %}" hx-target="#result">
+    {% csrf_token %}
     <div class="calc-input">
-      <input id="input-field" type="text">
+      <input id="input-field" name="input-field" type="text">
     </div>
-    <div class="buttons">
+    <div class="buttons calc-wrapper">
       <button value="7" class="btn btn-dark button">7</button>
       <button value="8" class="btn btn-dark button">8</button>
       <button value="9" class="btn btn-dark button">9</button>
@@ -28,23 +24,37 @@
       <button value="2" class="btn btn-dark button">2</button>
       <button value="3" class="btn btn-dark button">3</button>
       <button value="=" class="btn btn-dark button">=</button>
-      <button value="" class="btn btn-dark button"><-</button>
       <button value="" class="btn btn-dark button">0</button>
       <button value="" class="btn btn-dark button">.</button>
-      <button value="" class="btn btn-dark button"><</button>
-      <button value="" class="btn btn-dark button"><</button>
-      <button value="" class="btn btn-dark button"><-</button>
+      <button value="x" class="btn btn-dark button">x</button>
+      <button value="" class="btn btn-dark remove-one"><span><i class="fa-solid fa-arrow-left"></i></span></button>
+      <button class="btn btn-dark clear">Leeren</button>
+      <button type="submit" class="btn btn-dark" id="exponent_button">Ermitteln</button>
     </div>
-  </div>
+  </form>
+  <div id="result"></div>
   <script>
-    const input_field = document.querySelector('#input-field');
+    const input_field = document.getElementById('input-field');
+    const hidden_input = document.getElementById('hidden-input');
+    const remove_one_button = document.querySelector('.remove-one');
+    const clear = document.querySelector('.clear')
     const buttons = document.querySelectorAll('.button');
 
-    buttons.forEach(button => {
+    remove_one_button.addEventListener('click', () => {
+      let value = input_field.value
+      input_field.value = value.slice(0, -1);
+    });
 
+    clear.addEventListener('click', () => {
+      input_field.value = ' ';
+    });
+
+    buttons.forEach(button => {
       button.addEventListener('click', () => {
         input_field.value += button.value;
-      })
-    })
+        hidden_input.value = input_field.value; // Update the hidden input value
+      });
+    });
+
   </script>
 {% endblock %}
