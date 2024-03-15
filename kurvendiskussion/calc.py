@@ -28,6 +28,7 @@ class Calc:
         self.f = f
         return f
 
+    # Todo
     def gebe_exponenten_zurück(self, function):
         self.exponenten = [value for term in function for value in term.values() if value != 0]
         return self.exponenten
@@ -36,6 +37,7 @@ class Calc:
         self.y_achsenabschnitt = input_funktion.subs(self.x, 0)
         return self.y_achsenabschnitt
 
+    # Todo
     def bestimme_symmetrie(self, exponenten):
         gerade_exponenten = [x for x in exponenten if x % 2 == 0]
         ungerade_exponenten = [x for x in exponenten if x % 2 != 0]
@@ -46,6 +48,7 @@ class Calc:
         else:
             return "Die Symmetrie kann nicht abgelesen werden"
 
+    # Todo
     def bestimme_grenwertverhalten(self, links, rechts, function):
         if function.subs(self.x, links) > 0 > function.subs(self.x, rechts):
             return "2. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> +∞"
@@ -83,6 +86,7 @@ class Calc:
         self.extrem_punkte = [{x: function.subs(self.x, x)} for x in self.extrem_stellen]
         return self.extrem_punkte
 
+    # Todo
     def prüfe_ob_hoch_oder_tief_punkt(self, x_stelle, zweite_ableitung):
         if zweite_ableitung.subs(self.x, x_stelle) > 0:
             print("Tiefpunkt")
@@ -100,12 +104,14 @@ class Calc:
         self.wende_punkte = [{x: self.f.subs(self.x, x)} for x in self.wende_stellen]
         return self.wende_punkte
 
+    # Todo
     def prüfe_ob_hoch_sattelpunkt(self, x_stelle):
         if self.f1.subs(self.x, x_stelle) == 0:
             print("Sattelpunkt")
         else:
             print("Wendepunkt")
 
+    # Todo
     def ermittle_intervale(self, stellen, linke_grenze, rechte_grenze):
         # erstelle eine liste, mit allen werten, die für die Intervale wichtig sind
         interval_liste = [x for x in stellen]
@@ -121,18 +127,21 @@ class Calc:
         # hier wird der mittelwert überprüft, ob die steigend an diesem Mittelwert größer oder kleiner 0 ist
         return interval_dict, interval_einsetz_werte
 
+    # Todo
     def monotonie(self, linke_grenze, rechte_grenze):
         interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.extrem_stellen, linke_grenze,
                                                                         rechte_grenze)
         monotoni = [{x: 'Steigend'} if self.f1.subs(self.x, x) > 0 else {x: 'Falend'} for x in interval_einsetz_werte]
         return interval_dict, monotoni
 
+    # Todo
     def krümmung(self, linke_grenze, rechte_grenze):
         interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.wende_stellen, linke_grenze, rechte_grenze)
         krümmung = [{x: 'Linkskurve'} if self.f2.subs(self.x, x) > 0 else {x: 'Rechtskurve'} for x in
                     interval_einsetz_werte]
         return interval_dict, krümmung
 
+    # Todo
     def bestimme_tangente(self, x_stelle):
         # ermittle die Steigung durch einsetzen in die 1. Ableitung
         m = self.f1.subs(self.x, x_stelle)

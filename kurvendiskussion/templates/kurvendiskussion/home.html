@@ -6,7 +6,7 @@
 
     <div id="result"></div>
 
-    <form class="calc" hx-post="{% url 'home_view' %}" hx-target="#result">
+    <form class="calc" hx-post="{% url 'kurvendiskussion' %}" hx-target="#result">
       {% csrf_token %}
       <div class="calc-input">
         <input id="input-field" name="input-field" type="text">
@@ -15,22 +15,22 @@
         <button value="7" class="btn btn-dark button">7</button>
         <button value="8" class="btn btn-dark button">8</button>
         <button value="9" class="btn btn-dark button">9</button>
-        <button value="*" class="btn btn-dark button">x</button>
         <button value="/" class="btn btn-dark button">÷</button>
         <button value="4" class="btn btn-dark button">4</button>
         <button value="5" class="btn btn-dark button">5</button>
         <button value="6" class="btn btn-dark button">6</button>
-        <button value="+" class="btn btn-dark button">+</button>
-        <button value="-" class="btn btn-dark button">-</button>
+        <button value="*" class="btn btn-dark button">*</button>
         <button value="1" class="btn btn-dark button">1</button>
         <button value="2" class="btn btn-dark button">2</button>
         <button value="3" class="btn btn-dark button">3</button>
-        <button value="=" class="btn btn-dark button">=</button>
-        <button value="" class="btn btn-dark button">0</button>
-        <button value="" class="btn btn-dark point">.</button>
+        <button value="-" class="btn btn-dark button">-</button>
+        <button value="0" class="btn btn-dark button">0</button>
+        <button value="." class="btn btn-dark button">.</button>
         <button value="x" class="btn btn-dark button">x</button>
+        <button value="+" class="btn btn-dark button">+</button>
         <button value="" class="btn btn-dark remove-one"><span><i class="fa-solid fa-arrow-left"></i></span></button>
         <button class="btn btn-dark clear">Leeren</button>
+        <button class="btn btn-dark exponent">Exponent</button>
         <button type="submit" class="btn btn-dark" id="exponent_button">Ermitteln</button>
       </div>
     </form>
@@ -38,6 +38,7 @@
       const input_field = document.getElementById('input-field');
       const hidden_input = document.getElementById('hidden-input');
       const remove_one_button = document.querySelector('.remove-one');
+      const exponent = document.querySelector('.exponent');
       const clear = document.querySelector('.clear')
       const buttons = document.querySelectorAll('.button');
       const point = document.querySelector('.point');
@@ -57,9 +58,9 @@
         });
       });
 
-      point.addEventListener('click', () => {
-        input_field.value += '.';
-      })
+      exponent.addEventListener('click', () => {
+        input_field.value += '**';
+      });
 
     </script>
   </div>
