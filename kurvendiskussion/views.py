@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import View
 import re
+from .calc import Calc
+from sympy import symbols, simplify
 
 
 # Create your views here.
@@ -10,8 +12,17 @@ class HomeView(View):
         return render(request, 'kurvendiskussion/home.html')
 
     def post(self, request, *args, **kwargs):
-        input_data = request.POST.get('input-field')
-        r = re.split("\+|-", input_data)
-        print(r)
-        print("hello")
-        return render(request, "kurvendiskussion/partials/result.html")
+        try:
+            input_data = request.POST.get('input-field')
+            function = simplify(input_data.replace('x', '*x'))
+            calc = Calc(function)
+            calc.bestimme_y_achsenabschnitt(function)
+            calc.ermittle_ableitungen(function)
+            calc.ermittle_nullstellen(function)
+            calc.ermittle_extremstellen(calc.f1, function)
+            calc.ermittle_wendestellen()
+
+            context = {'calc': calc}
+            return render(request, "kurvendiskussion/partials/result.html", context)
+        except:
+            return render(request, "kurvendiskussion/partials/result.html")

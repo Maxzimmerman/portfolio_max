@@ -3,10 +3,10 @@ from sympy import symbols, Eq, solve
 
 
 class Calc:
-    def __init__(self):
+    def __init__(self, function):
         self.x = symbols('x')
         self.b = symbols('b')
-        self.f = None
+        self.f = function
         self.f1 = None
         self.f2 = None
         self.f3 = None
@@ -23,14 +23,14 @@ class Calc:
     def liest_funktion_ein(self, input_function):
         # bildet die Funktion indem eine liste aus dictionaries
         # durchlaufen wird und die keys und values der funktion hinzugefügt werden
-        f = sum(key * self.x ** value for term in input_function for key, value in term.items() if value > -1 and type(value) == int)
+        f = sum(key * self.x ** value for term in input_function for key, value in term.items() if
+                value > -1 and type(value) == int)
         self.f = f
         return f
 
     def gebe_exponenten_zurück(self, function):
         self.exponenten = [value for term in function for value in term.values() if value != 0]
         return self.exponenten
-
 
     def bestimme_y_achsenabschnitt(self, input_funktion):
         self.y_achsenabschnitt = input_funktion.subs(self.x, 0)
@@ -61,6 +61,7 @@ class Calc:
         nullPoints = solve(Eq(function, 0))
         # fügt alle reelen nullstellen in dezimal-form in real_nullstellen
         reale_nullstellen = [{nullstelle.evalf(): 0} for nullstelle in nullPoints if nullstelle.is_real]
+        self.null_stellen = reale_nullstellen
         return reale_nullstellen
 
     def ermittle_ableitungen(self, function):
@@ -113,20 +114,23 @@ class Calc:
         interval_liste = sorted(interval_liste)
 
         # erstelle die intevale
-        interval_dict = [{interval_liste[i]: interval_liste[i + 1]} for i, x in enumerate(interval_liste) if len(interval_liste) > i + 1]
+        interval_dict = [{interval_liste[i]: interval_liste[i + 1]} for i, x in enumerate(interval_liste) if
+                         len(interval_liste) > i + 1]
         # die intervale werden durchlaufen und ein mittelwert wird für jedes interval errechnet
         interval_einsetz_werte = [(key + value) / 2 for term in interval_dict for key, value in term.items()]
         # hier wird der mittelwert überprüft, ob die steigend an diesem Mittelwert größer oder kleiner 0 ist
         return interval_dict, interval_einsetz_werte
 
     def monotonie(self, linke_grenze, rechte_grenze):
-        interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.extrem_stellen, linke_grenze, rechte_grenze)
+        interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.extrem_stellen, linke_grenze,
+                                                                        rechte_grenze)
         monotoni = [{x: 'Steigend'} if self.f1.subs(self.x, x) > 0 else {x: 'Falend'} for x in interval_einsetz_werte]
         return interval_dict, monotoni
 
     def krümmung(self, linke_grenze, rechte_grenze):
         interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.wende_stellen, linke_grenze, rechte_grenze)
-        krümmung = [{x: 'Linkskurve'} if self.f2.subs(self.x, x) > 0 else {x: 'Rechtskurve'} for x in interval_einsetz_werte]
+        krümmung = [{x: 'Linkskurve'} if self.f2.subs(self.x, x) > 0 else {x: 'Rechtskurve'} for x in
+                    interval_einsetz_werte]
         return interval_dict, krümmung
 
     def bestimme_tangente(self, x_stelle):
