@@ -14,6 +14,7 @@ class HomeView(View):
     def post(self, request, *args, **kwargs):
         try:
             input_data = request.POST.get('input-field')
+            # Todo fix input inputs without first base should work
             function = simplify(input_data.replace('x', '*x'))
             calc = Calc(function)
             calc.gebe_exponenten_zurück(function)
@@ -24,6 +25,8 @@ class HomeView(View):
             calc.ermittle_nullstellen(function)
             calc.ermittle_extremstellen(calc.f1, function)
             calc.ermittle_wendestellen()
+            calc.monotonie(-100, 100)
+            calc.krümmung(-100, 100)
             context = {'calc': calc}
             return render(request, "kurvendiskussion/partials/result.html", context)
         except:

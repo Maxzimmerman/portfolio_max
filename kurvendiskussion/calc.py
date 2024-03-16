@@ -21,6 +21,8 @@ class Calc:
         self.tangente = None
         self.symmetrie = None
         self.grenzwert_verhalten = None
+        self.monotonieWert = None
+        self.krümmungWert = None
 
     def liest_funktion_ein(self, input_function):
         # bildet die Funktion indem eine liste aus dictionaries
@@ -30,6 +32,7 @@ class Calc:
         self.f = f
         return f
 
+    # Todo fix
     def gebe_exponenten_zurück(self, function):
         terms = function.as_ordered_terms()
         exponents = [term.as_poly(self.x).degree() for term in terms]
@@ -55,19 +58,19 @@ class Calc:
 
     def bestimme_grenzwertverhalten(self, links, rechts, function):
         if function.subs(self.x, links) > 0 > function.subs(self.x, rechts):
-            #return "2. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> +∞"
+            # return "2. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> +∞"
             self.grenzwert_verhalten = "2. in 4."
             return "2. in 4."
         elif function.subs(self.x, links) > 0 < function.subs(self.x, rechts):
-            #return "2. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> +∞"
+            # return "2. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> +∞"
             self.grenzwert_verhalten = "2. in 1."
             return "2. in 1."
         elif function.subs(self.x, links) < 0 > function.subs(self.x, rechts):
-            #return "3. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> -∞"
+            # return "3. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> -∞"
             self.grenzwert_verhalten = "3. in 4."
             return "3. in 4."
         elif function.subs(self.x, links) < 0 < function.subs(self.x, rechts):
-            #return "3. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> -∞"
+            # return "3. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> -∞"
             self.grenzwert_verhalten = "3. in 1."
             return "3. in 1."
 
@@ -96,6 +99,7 @@ class Calc:
         self.extrem_stellen = [x.evalf() for x in xe if x.is_real]
         # bestimmt die y-werte der extremstellen
         self.extrem_punkte = [{x: function.subs(self.x, x)} for x in self.extrem_stellen]
+        [self.prüfe_ob_hoch_oder_tief_punkt(x, self.f2) for x in self.extrem_stellen]
         return self.extrem_punkte
 
     # Todo
@@ -114,9 +118,7 @@ class Calc:
         self.wende_stellen = [x.evalf() for x in xw if x.is_real]
         # bestimmt die y-werte der extremstellen
         self.wende_punkte = [{x: self.f.subs(self.x, x)} for x in self.wende_stellen]
-        r = []
-        r.append([self.prüfe_ob_hoch_oder_tief_punkt(x, self.f2) if self.prüfe_ob_hoch_oder_tief_punkt(x, self.f2) != [[]] else "Keine Sattelstelle"  for x in self.wende_stellen])
-        print(r)
+        [self.prüfe_ob_hoch_sattelpunkt(x) for x in self.wende_stellen]
         return self.wende_punkte
 
     # Todo
@@ -126,7 +128,6 @@ class Calc:
         else:
             print("Wendepunkt")
 
-    # Todo
     def ermittle_intervale(self, stellen, linke_grenze, rechte_grenze):
         # erstelle eine liste, mit allen werten, die für die Intervale wichtig sind
         interval_liste = [x for x in stellen]
@@ -142,19 +143,19 @@ class Calc:
         # hier wird der mittelwert überprüft, ob die steigend an diesem Mittelwert größer oder kleiner 0 ist
         return interval_dict, interval_einsetz_werte
 
-    # Todo
     def monotonie(self, linke_grenze, rechte_grenze):
         interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.extrem_stellen, linke_grenze,
                                                                         rechte_grenze)
         monotoni = [{x: 'Steigend'} if self.f1.subs(self.x, x) > 0 else {x: 'Falend'} for x in interval_einsetz_werte]
-        return interval_dict, monotoni
+        self.monotonieWert = monotoni
+        return monotoni
 
-    # Todo
     def krümmung(self, linke_grenze, rechte_grenze):
         interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.wende_stellen, linke_grenze, rechte_grenze)
         krümmung = [{x: 'Linkskurve'} if self.f2.subs(self.x, x) > 0 else {x: 'Rechtskurve'} for x in
                     interval_einsetz_werte]
-        return interval_dict, krümmung
+        self.krümmungWert = interval_dict + krümmung
+        return krümmung
 
     # Todo
     def bestimme_tangente(self, x_stelle):
