@@ -19,6 +19,8 @@ class Calc:
         self.wende_stellen = None
         self.wende_punkte = None
         self.tangente = None
+        self.symmetrie = None
+        self.grenzwert_verhalten = None
 
     def liest_funktion_ein(self, input_function):
         # bildet die Funktion indem eine liste aus dictionaries
@@ -28,36 +30,46 @@ class Calc:
         self.f = f
         return f
 
-    # Todo
     def gebe_exponenten_zurück(self, function):
-        self.exponenten = [value for term in function for value in term.values() if value != 0]
-        return self.exponenten
+        terms = function.as_ordered_terms()
+        exponents = [term.as_poly(self.x).degree() for term in terms]
+        self.exponenten = exponents
+        return exponents
 
     def bestimme_y_achsenabschnitt(self, input_funktion):
         self.y_achsenabschnitt = input_funktion.subs(self.x, 0)
         return self.y_achsenabschnitt
 
-    # Todo
     def bestimme_symmetrie(self, exponenten):
         gerade_exponenten = [x for x in exponenten if x % 2 == 0]
         ungerade_exponenten = [x for x in exponenten if x % 2 != 0]
         if len(exponenten) == len(gerade_exponenten):
+            self.symmetrie = "Achsensymmetrisch zur Y-Achse"
             return "Achsensymmetrisch zur Y-Achse"
         elif len(exponenten) == len(ungerade_exponenten):
+            self.symmetrie = "Punktsymmetrisch zum Uhrsprung"
             return "Punktsymmetrisch zum Uhrsprung"
         else:
+            self.symmetrie = "Die Symmetrie kann nicht abgelesen werden"
             return "Die Symmetrie kann nicht abgelesen werden"
 
-    # Todo
-    def bestimme_grenwertverhalten(self, links, rechts, function):
+    def bestimme_grenzwertverhalten(self, links, rechts, function):
         if function.subs(self.x, links) > 0 > function.subs(self.x, rechts):
-            return "2. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> +∞"
+            #return "2. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> +∞"
+            self.grenzwert_verhalten = "2. in 4."
+            return "2. in 4."
         elif function.subs(self.x, links) > 0 < function.subs(self.x, rechts):
-            return "2. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> +∞"
+            #return "2. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> +∞"
+            self.grenzwert_verhalten = "2. in 1."
+            return "2. in 1."
         elif function.subs(self.x, links) < 0 > function.subs(self.x, rechts):
-            return "3. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> -∞"
+            #return "3. in 4.\n" + "x -> +∞ => f(x) -> -∞\n" + "x -> -∞ => f(x) -> -∞"
+            self.grenzwert_verhalten = "3. in 4."
+            return "3. in 4."
         elif function.subs(self.x, links) < 0 < function.subs(self.x, rechts):
-            return "3. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> -∞"
+            #return "3. in 1.\n" + "x -> +∞ => f(x) -> +∞\n" + "x -> -∞ => f(x) -> -∞"
+            self.grenzwert_verhalten = "3. in 1."
+            return "3. in 1."
 
     def ermittle_nullstellen(self, function):
         # bestimmt die nullstellen von f(x)
@@ -102,6 +114,9 @@ class Calc:
         self.wende_stellen = [x.evalf() for x in xw if x.is_real]
         # bestimmt die y-werte der extremstellen
         self.wende_punkte = [{x: self.f.subs(self.x, x)} for x in self.wende_stellen]
+        r = []
+        r.append([self.prüfe_ob_hoch_oder_tief_punkt(x, self.f2) if self.prüfe_ob_hoch_oder_tief_punkt(x, self.f2) != [[]] else "Keine Sattelstelle"  for x in self.wende_stellen])
+        print(r)
         return self.wende_punkte
 
     # Todo
