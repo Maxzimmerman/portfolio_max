@@ -15,7 +15,7 @@ class HomeView(View):
         try:
             input_data = request.POST.get('input-field')
             # Todo fix input inputs without first base should work
-            function = simplify(input_data.replace('x', '*x'))
+            function = simplify(input_data)
             calc = Calc(function)
             calc.gebe_exponenten_zurück(function)
             calc.bestimme_y_achsenabschnitt(function)
