@@ -33,18 +33,22 @@ Ableitungen<hr>
 </div>
 </div>
 <div>7. Monotonie<hr><div>
-  <p>
   {% for intervalle in calc.monotonieWert %}
-    <span>{{ intervalle }}</span>
+    <p>
+      {% for infos in intervalle %}
+        <span>{{ infos }}</span>
+      {% endfor %}
+    </p>
   {% endfor %}
-  </p>
 </div>
 </div>
 <div>8. Krümmung:<hr><div>
-  <p>
     {% for intervalle in calc.krümmungWert %}
-    <span>{{ intervalle }}</span>
+      <p>
+        {% for infos in intervalle %}
+          <span>{{ infos }}</span>
+        {% endfor %}
+      </p>
     {% endfor %}
-  </p>
 </div>
 </div>

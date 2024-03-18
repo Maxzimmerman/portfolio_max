@@ -100,7 +100,8 @@ class Calc:
         # fügt alle reelen in dezimal-form in realxe hinzu
         self.extrem_stellen = [x.evalf() for x in xe if x.is_real]
         # bestimmt die y-werte und ob es Hoch- oder Tiefpunkte sind der extremstellen
-        self.extrem_punkte = [[x, function.subs(self.x, x), self.prüfe_ob_hoch_oder_tief_punkt(x)] for x in self.extrem_stellen]
+        self.extrem_punkte = [[x, function.subs(self.x, x), self.prüfe_ob_hoch_oder_tief_punkt(x)] for x in
+                              self.extrem_stellen]
         return self.extrem_punkte
 
     def prüfe_ob_hoch_oder_tief_punkt(self, x_stelle):
@@ -143,15 +144,22 @@ class Calc:
         interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.extrem_stellen, linke_grenze,
                                                                         rechte_grenze)
         monotoni = [{x: 'Steigend'} if self.f1.subs(self.x, x) > 0 else {x: 'Falend'} for x in interval_einsetz_werte]
-        self.monotonieWert = monotoni
+        # die intervalle werden mit ihrer Eigenschaft in einem Array gespeichert
+        werte = [[key, value, 'steigend'] if self.f1.subs(self.x, (key + value / 2)) > 0 else [key, value, 'fallend']
+                 for item in interval_dict for key, value in item.items()]
+        print(werte)
+        self.monotonieWert = werte
         return monotoni
 
     def krümmung(self, linke_grenze, rechte_grenze):
         interval_dict, interval_einsetz_werte = self.ermittle_intervale(self.wende_stellen, linke_grenze, rechte_grenze)
         krümmung = [{x: 'Linkskurve'} if self.f2.subs(self.x, x) > 0 else {x: 'Rechtskurve'} for x in
                     interval_einsetz_werte]
-        self.krümmungWert = interval_dict + krümmung
-        print(interval_dict, krümmung, interval_einsetz_werte)
+        # die intervalle werden mit ihrer Eigenschaft in einer List gespeichert
+        werte = [[key, value, 'Linkskurve'] if self.f2.subs(self.x, (key + value / 2)) > 0 else [key, value, 'Rechtskurve']
+                 for item in interval_dict for key, value in item.items()]
+        self.krümmungWert = werte
+        print(werte)
         return krümmung
 
     # Todo
