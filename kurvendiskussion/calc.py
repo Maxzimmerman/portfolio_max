@@ -23,6 +23,8 @@ class Calc:
         self.grenzwert_verhalten = None
         self.monotonieWert = None
         self.krümmungWert = None
+        self.extemstellen_alle_datan = []
+        self.wendestellen_alle_daten = None
 
     def liest_funktion_ein(self, input_function):
         # bildet die Funktion indem eine liste aus dictionaries
@@ -97,18 +99,14 @@ class Calc:
         xe = solve(Eq(erste_ableitung, 0))
         # fügt alle reelen in dezimal-form in realxe hinzu
         self.extrem_stellen = [x.evalf() for x in xe if x.is_real]
-        # bestimmt die y-werte der extremstellen
-        self.extrem_punkte = [{x: function.subs(self.x, x)} for x in self.extrem_stellen]
-        [self.prüfe_ob_hoch_oder_tief_punkt(x, self.f2) for x in self.extrem_stellen]
+        # bestimmt die y-werte und ob es Hoch- oder Tiefpunkte sind der extremstellen
+        self.extrem_punkte = [[x, function.subs(self.x, x), self.prüfe_ob_hoch_oder_tief_punkt(x)] for x in self.extrem_stellen]
         return self.extrem_punkte
 
-    # Todo
-    def prüfe_ob_hoch_oder_tief_punkt(self, x_stelle, zweite_ableitung):
-        if zweite_ableitung.subs(self.x, x_stelle) > 0:
-            print("Tiefpunkt")
+    def prüfe_ob_hoch_oder_tief_punkt(self, x_stelle):
+        if self.f2.subs(self.x, x_stelle) > 0:
             return "Tiefpunkt"
         else:
-            print("Hochpunkt")
             return "Hochpunkt"
 
     def ermittle_wendestellen(self):
@@ -117,16 +115,14 @@ class Calc:
         # fügt alle reelen in dezimal-form in realxe hinzu
         self.wende_stellen = [x.evalf() for x in xw if x.is_real]
         # bestimmt die y-werte der extremstellen
-        self.wende_punkte = [{x: self.f.subs(self.x, x)} for x in self.wende_stellen]
-        [self.prüfe_ob_hoch_sattelpunkt(x) for x in self.wende_stellen]
+        self.wende_punkte = [[x, self.f.subs(self.x, x), self.prüfe_ob_sattelpunkt(x)] for x in self.wende_stellen]
         return self.wende_punkte
 
-    # Todo
-    def prüfe_ob_hoch_sattelpunkt(self, x_stelle):
+    def prüfe_ob_sattelpunkt(self, x_stelle):
         if self.f1.subs(self.x, x_stelle) == 0:
-            print("Sattelpunkt")
+            return "Sattelpunkt"
         else:
-            print("Wendepunkt")
+            return " "
 
     def ermittle_intervale(self, stellen, linke_grenze, rechte_grenze):
         # erstelle eine liste, mit allen werten, die für die Intervale wichtig sind
@@ -155,6 +151,7 @@ class Calc:
         krümmung = [{x: 'Linkskurve'} if self.f2.subs(self.x, x) > 0 else {x: 'Rechtskurve'} for x in
                     interval_einsetz_werte]
         self.krümmungWert = interval_dict + krümmung
+        print(interval_dict, krümmung, interval_einsetz_werte)
         return krümmung
 
     # Todo

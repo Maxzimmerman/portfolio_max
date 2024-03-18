@@ -1,12 +1,50 @@
-<div><p>Funktion: <span>{{ calc.f }}</span></p></div>
-<div><p>Y-Achsenabschnitt: <span>{{ calc.y_achsenabschnitt }}</span></p></div>
-<div><p>Symmetrieverhalten: <span>{{ calc.symmetrie }}</span></p></div>
-<div><p>Grenzwertverhalten: <span>{{ calc.grenzwert_verhalten }}</span></p></div>
+<div>1. Y-Achsenabschnitt:<hr> <div class="info"><p> <span>{{ calc.y_achsenabschnitt }}</span></p></div></div>
+<div>2. Symmetrieverhalten:<hr> <div><p> <span>{{ calc.symmetrie }}</span></p></div></div>
+<div>3. Grenzwertverhalten:<hr><div><p> <span>{{ calc.grenzwert_verhalten }}</span></p></div></div>
+Ableitungen<hr>
 <div><p>1. Ableitung: <span>{{ calc.f1 }}</span></p></div>
 <div><p>2. Ableitung: <span>{{ calc.f2 }}</span></p></div>
-<div><p>Nullstellen: <span>({{ calc.null_stellen }})</span></p></div>
-<div><p>Extremwerte: <span>{{ calc.extrem_punkte }}</span></p></div>
-<div><p>Wendestellen: <span>{{ calc.wende_punkte }}</span></p></div>
-<div><p>Monotonie: <span>{{ calc.monotonieWert }}</span></p></div>
-<div><p>Krümmung: <span>{{ calc.krümmungWert }}</span></p></div>
-
+<div>4. Nullstellen:<hr><div>
+  <p>
+    {% for nullstelle in calc.null_stellen %}
+      <span>{{ nullstelle }}</span>
+    {% endfor %}
+  </p>
+</div>
+</div>
+<div>5. Extremwerte:<hr><div>
+{% for extrem_punkt in calc.extrem_punkte %}
+  <p>
+  {% for punkt_bestandteil in extrem_punkt %}
+    <span>{{ punkt_bestandteil }}</span>
+  {% endfor %}
+  </p>
+{% endfor %}
+</div>
+</div>
+<div>6. Wendepunkte:<hr><div>
+{% for wende_punkt in calc.wende_punkte %}
+  <p>
+  {% for punkt_bestandteil in wende_punkt %}
+    <span>{{ punkt_bestandteil }}</span>
+  {% endfor %}
+  </p>
+{% endfor %}
+</div>
+</div>
+<div>7. Monotonie<hr><div>
+  <p>
+  {% for intervalle in calc.monotonieWert %}
+    <span>{{ intervalle }}</span>
+  {% endfor %}
+  </p>
+</div>
+</div>
+<div>8. Krümmung:<hr><div>
+  <p>
+    {% for intervalle in calc.krümmungWert %}
+    <span>{{ intervalle }}</span>
+    {% endfor %}
+  </p>
+</div>
+</div>

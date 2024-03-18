@@ -49,10 +49,13 @@
   border-right: 1px solid black;
   border-radius: 5px;
   padding: 7px;
-  margin: 10px 0px 10px 0px;
+  margin: 20px 0px 20px 0px;
 }
 
 #result > div > p {
   margin: 0px;
 }
 
+.info {
+  margin-bottom: 20px;
+}
