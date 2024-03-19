@@ -11,7 +11,10 @@
     <form class="calc" hx-post="{% url 'kurvendiskussion' %}" hx-target="#result">
       {% csrf_token %}
       <div class="calc-input">
-        <input id="input-field" name="input-field" type="text">
+        <input id="input-field" name="function" type="text" placeholder="Funktion">
+      </div>
+      <div class="calc-input">
+        <input id="input-field" name="x_stelle_for_tangente" type="text" placeholder="X-Stelle für Tangente der Funktion">
       </div>
       <div class="buttons calc-wrapper">
         <button value="7" class="btn btn-dark button">7</button>
@@ -61,7 +64,7 @@
       });
 
       exponent.addEventListener('click', () => {
-        input_field.value += '**';
+        input_field.value += '^';
       });
 
     </script>

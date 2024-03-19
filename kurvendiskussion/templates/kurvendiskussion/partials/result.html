@@ -52,3 +52,12 @@ Ableitungen<hr>
     {% endfor %}
 </div>
 </div>
+{% if calc.tangente %}
+  <div>9. Tangenge an der stelle {{ calc.x_stelle_der_tangente }}: <hr>
+    <div>
+      <p>
+        <span>{{ calc.tangente }}</span>
+      </p>
+    </div>
+  </div>
+{% endif %}

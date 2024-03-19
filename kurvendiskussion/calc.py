@@ -25,6 +25,7 @@ class Calc:
         self.krümmungWert = None
         self.extemstellen_alle_datan = []
         self.wendestellen_alle_daten = None
+        self.x_stelle_der_tangente = None
 
     def liest_funktion_ein(self, input_function):
         # bildet die Funktion indem eine liste aus dictionaries
@@ -94,6 +95,7 @@ class Calc:
         # etmittelt die 4. Ableitung
         return self.f1, self.f2, self.f3
 
+    # Todo ist fehlerhaft
     def ermittle_extremstellen(self, erste_ableitung, function):
         # stellt die gleichung f'(x) = 0 auf und löst
         xe = solve(Eq(erste_ableitung, 0))
@@ -147,7 +149,6 @@ class Calc:
         # die intervalle werden mit ihrer Eigenschaft in einem Array gespeichert
         werte = [[key, value, 'steigend'] if self.f1.subs(self.x, (key + value / 2)) > 0 else [key, value, 'fallend']
                  for item in interval_dict for key, value in item.items()]
-        print(werte)
         self.monotonieWert = werte
         return monotoni
 
@@ -159,10 +160,9 @@ class Calc:
         werte = [[key, value, 'Linkskurve'] if self.f2.subs(self.x, (key + value / 2)) > 0 else [key, value, 'Rechtskurve']
                  for item in interval_dict for key, value in item.items()]
         self.krümmungWert = werte
-        print(werte)
         return krümmung
 
-    # Todo
+    # Todo implement
     def bestimme_tangente(self, x_stelle):
         # ermittle die Steigung durch einsetzen in die 1. Ableitung
         m = self.f1.subs(self.x, x_stelle)
@@ -172,4 +172,4 @@ class Calc:
         b = solve(Eq(m * x_stelle + self.b, y))
         # bilde die tangente
         self.tangente = [m * self.x + x.evalf() for x in b]
-        print(self.tangente)
+        self.x_stelle_der_tangente = x_stelle
