@@ -48,23 +48,29 @@
       const buttons = document.querySelectorAll('.button');
       const point = document.querySelector('.point');
 
-      remove_one_button.addEventListener('click', () => {
+      remove_one_button.addEventListener('click', (event) => {
         let value = input_field.value
         input_field.value = value.slice(0, -1);
+        event.preventDefault();
       });
 
-      clear.addEventListener('click', () => {
+      clear.addEventListener('click', (event) => {
         input_field.value = null;
+        event.preventDefault();
       });
 
       buttons.forEach(button => {
-        button.addEventListener('click', () => {
-          input_field.value += button.value;
+        button.addEventListener('click', (event) => {
+          if(button.value !== '') {
+            input_field.value += button.value;
+          }
+          event.preventDefault();
         });
       });
 
-      exponent.addEventListener('click', () => {
+      exponent.addEventListener('click', (event) => {
         input_field.value += '^';
+        event.preventDefault();
       });
 
     </script>
