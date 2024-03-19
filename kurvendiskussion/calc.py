@@ -162,7 +162,6 @@ class Calc:
         self.krümmungWert = werte
         return krümmung
 
-    # Todo implement
     def bestimme_tangente(self, x_stelle):
         # ermittle die Steigung durch einsetzen in die 1. Ableitung
         m = self.f1.subs(self.x, x_stelle)
