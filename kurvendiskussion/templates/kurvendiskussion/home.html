@@ -4,9 +4,11 @@
   <div class="container body">
     <h1>Kurvendiskussion</h1>
 
-    <div><h5>Bei der Eingabe sind folgende Dinge zu beachten: <br> <span>Die Basis und das X müssen durch ein '*' getrennt sein, diese Syntax wird noch nicht unterstützt: 2x</span></h5></div>
+    <div><h5>Bei der Eingabe sind folgende Dinge zu beachten: <br> <span>Die Basis und das X müssen durch ein '*' getrennt sein, diese Syntax wird noch nicht unterstützt: 2x</span>
+    </h5></div>
 
     <div id="result"></div>
+    <div id="plot"></div>
 
     <form class="calc" hx-post="{% url 'kurvendiskussion' %}" hx-target="#result">
       {% csrf_token %}
@@ -14,7 +16,8 @@
         <input id="input-field" name="function" type="text" placeholder="Funktion">
       </div>
       <div class="calc-input">
-        <input id="input-field" name="x_stelle_for_tangente" type="text" placeholder="X-Stelle für Tangente der Funktion">
+        <input id="input-field" name="x_stelle_for_tangente" type="text"
+               placeholder="X-Stelle für Tangente der Funktion">
       </div>
       <div class="buttons calc-wrapper">
         <button value="7" class="btn btn-dark button">7</button>
@@ -36,9 +39,67 @@
         <button value="" class="btn btn-dark remove-one"><span><i class="fa-solid fa-arrow-left"></i></span></button>
         <button class="btn btn-dark clear">Leeren</button>
         <button class="btn btn-dark exponent">Exponent</button>
-        <button type="submit" class="btn btn-dark" id="exponent_button">Ermitteln</button>
+        <button type="submit" class="btn btn-dark" id="exponent_button" onclick="plotFunctions()">Ermitteln</button>
       </div>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+      function plotFunctions() {
+        // Get the mathematical expression from the input field
+        var expression = document.getElementById('function').value;
+        var tangente = document.getElementById('tangente').value;
+
+        console.log("Expression:", expression);
+        console.log("Tangent expression:", tangente);
+
+        try {
+          var parsedExpression = math.parse(expression);
+          var parsedTangente = math.parse(tangente);
+
+          var f = function (x) {
+            return parsedExpression.evaluate({x: x});
+          };
+
+          var t = function (x) {
+            return parsedTangente.evaluate({x: x});
+          }
+
+          var xValues = math.range(-20, 20, 0.1)._data;
+          var yValues1 = xValues.map(f);
+          var yValues2 = xValues.map(t);
+
+          var trace = {
+            x: xValues,
+            y: yValues1,
+            type: 'scatter',
+            name: 'f(x)'
+          };
+
+          var trace2 = {
+            x: xValues,
+            y: yValues2,
+            type: 'scatter',
+            name: 'tangente von f(x)'
+          }
+
+          var layout = {
+            title: '',
+            xaxis: {
+              title: 'x'
+            },
+            yaxis: {
+              title: 'y'
+            }
+          };
+
+          Plotly.newPlot('plot', [trace, trace2], layout);
+        } catch (error) {
+          console.error("Error plotting function:", error);
+          alert("Invalid expression. Please enter a valid mathematical expression.");
+        }
+      }
+    </script>
     <script>
       const input_field = document.getElementById('input-field');
       const hidden_input = document.getElementById('hidden-input');
@@ -61,7 +122,7 @@
 
       buttons.forEach(button => {
         button.addEventListener('click', (event) => {
-          if(button.value !== '') {
+          if (button.value !== '') {
             input_field.value += button.value;
           }
           event.preventDefault();
@@ -72,6 +133,7 @@
         input_field.value += '^';
         event.preventDefault();
       });
+
     </script>
   </div>
 {% endblock %}

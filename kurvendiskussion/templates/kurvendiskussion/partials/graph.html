@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Plotting</title>
+    <!-- Include Math.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.5.0/math.js"></script>
+    <!-- Include Plotly.js (or any other plotting library) -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div>
+        <label for="expression">Enter a mathematical expression:</label>
+        <input type="text" id="expression" placeholder="e.g., 3*x^3 - 2*x^1">
+        <button onclick="plotFunction()">Plot</button>
+    </div>
+    <div id="plot"></div>
+
+    <script>
+        function plotFunction() {
+            // Get the mathematical expression from the input field
+            var expression = document.getElementById("expression").value;
+
+            try {
+                // Parse the expression using Math.js
+                var parsedExpression = math.parse(expression);
+
+                // Generate data for plotting
+                var f = function(x) {
+                    return parsedExpression.evaluate({ x: x });
+                };
+
+                var xValues = math.range(-5, 5, 0.1)._data;
+                var yValues = xValues.map(f);
+
+                // Create the plot using Plotly.js
+                var trace = {
+                    x: xValues,
+                    y: yValues,
+                    type: 'scatter'
+                };
+
+                var layout = {
+                    title: 'Plot of ' + expression,
+                    xaxis: {
+                        title: 'x'
+                    },
+                    yaxis: {
+                        title: 'f(x)'
+                    }
+                };
+
+                Plotly.newPlot('plot', [trace], layout);
+            } catch (error) {
+                console.error("Error plotting function:", error);
+                alert("Invalid expression. Please enter a valid mathematical expression.");
+            }
+        }
+    </script>
+</body>
+</html>
+

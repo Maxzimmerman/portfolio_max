@@ -172,3 +172,9 @@ class Calc:
         # bilde die tangente
         self.tangente = [m * self.x + x.evalf() for x in b]
         self.x_stelle_der_tangente = x_stelle
+
+    def setze_funktion(self):
+        return str(self.f)
+
+    def setze_tangen(self):
+        return sum(x for x in self.tangente)

@@ -33,3 +33,8 @@ class HomeView(View):
             return render(request, "kurvendiskussion/partials/result.html", context)
         except:
             return render(request, "kurvendiskussion/partials/result.html")
+
+
+class TestView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'kurvendiskussion/partials/graph.html')
