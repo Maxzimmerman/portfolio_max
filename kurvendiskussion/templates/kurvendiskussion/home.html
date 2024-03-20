@@ -16,7 +16,7 @@
         <input id="input-field" name="function" type="text" placeholder="Funktion">
       </div>
       <div class="calc-input">
-        <input id="input-field" name="x_stelle_for_tangente" type="text"
+        <input id="tangente-input" name="x_stelle_for_tangente" type="text"
                placeholder="X-Stelle für Tangente der Funktion">
       </div>
       <div class="buttons calc-wrapper">
@@ -46,12 +46,8 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script>
       function plotFunctions() {
-        // Get the mathematical expression from the input field
-        var expression = document.getElementById('function').value;
-        var tangente = document.getElementById('tangente').value;
-
-        console.log("Expression:", expression);
-        console.log("Tangent expression:", tangente);
+        var expression = "2x^2";
+        var tangente = "8x-8";
 
         try {
           var parsedExpression = math.parse(expression);

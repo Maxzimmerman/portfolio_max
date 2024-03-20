@@ -9,6 +9,12 @@ from sympy import symbols, simplify
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
+        request.calc = None
+        if 'calc' in request.session:
+            print('there')
+        else:
+            print('not there')
+        print(request.calc)
         return render(request, 'kurvendiskussion/home.html')
 
     def post(self, request, *args, **kwargs):
@@ -29,6 +35,7 @@ class HomeView(View):
             calc.krümmung(-100, 100)
             if x_stelle:
                 calc.bestimme_tangente(float(x_stelle))
+
             context = {'calc': calc}
             return render(request, "kurvendiskussion/partials/result.html", context)
         except:
