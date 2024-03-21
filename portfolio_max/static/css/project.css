@@ -69,3 +69,7 @@
 .info {
   margin-bottom: 20px;
 }
+
+#fehler {
+  border: #b94a48 solid 3px !important;
+}

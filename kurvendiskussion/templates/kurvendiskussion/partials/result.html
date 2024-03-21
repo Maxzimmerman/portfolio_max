@@ -1,85 +1,90 @@
-<div>1. Y-Achsenabschnitt:
-  <hr>
-  <div class="info"><p><span>{{ calc.y_achsenabschnitt }}</span></p></div>
-</div>
-<div>2. Symmetrieverhalten:
-  <hr>
-  <div><p><span>{{ calc.symmetrie }}</span></p></div>
-</div>
-<div>3. Grenzwertverhalten:
-  <hr>
-  <div><p><span>{{ calc.grenzwert_verhalten }}</span></p></div>
-</div>
-Ableitungen
-<hr>
-<div><p>1. Ableitung: <span>{{ calc.setze_erste_ableitung }}</span></p></div>
-<div><p>2. Ableitung: <span>{{ calc.setze_zweite_ableitung }}</span></p></div>
-<div>4. Nullstellen:
-  <hr>
-  <div>
-    <p>
-      {% for nullstelle in calc.null_stellen %}
-        <span>{{ nullstelle }}</span>
-      {% endfor %}
-    </p>
+{% if fehler %}
+  <div id="fehler">{{ fehler.capitalize }}</div>
+{% else %}
+  <div>1. Y-Achsenabschnitt:
+    <hr>
+    <div class="info"><p><span>{{ calc.y_achsenabschnitt }}</span></p></div>
   </div>
-</div>
-<div>5. Extremwerte:
-  <hr>
-  <div>
-    {% for extrem_punkt in calc.extrem_punkte %}
-      <p>
-        {% for punkt_bestandteil in extrem_punkt %}
-          <span>{{ punkt_bestandteil }}</span>
-        {% endfor %}
-      </p>
-    {% endfor %}
+  <div>2. Symmetrieverhalten:
+    <hr>
+    <div><p><span>{{ calc.symmetrie }}</span></p></div>
   </div>
-</div>
-<div>6. Wendepunkte:
-  <hr>
-  <div>
-    {% for wende_punkt in calc.wende_punkte %}
-      <p>
-        {% for punkt_bestandteil in wende_punkt %}
-          <span>{{ punkt_bestandteil }}</span>
-        {% endfor %}
-      </p>
-    {% endfor %}
+  <div>3. Grenzwertverhalten:
+    <hr>
+    <div><p><span>{{ calc.grenzwert_verhalten }}</span></p></div>
   </div>
-</div>
-<div>7. Monotonie
+  Ableitungen
   <hr>
-  <div>
-    {% for intervalle in calc.monotonieWert %}
-      <p>
-        {% for infos in intervalle %}
-          <span>{{ infos }}</span>
-        {% endfor %}
-      </p>
-    {% endfor %}
-  </div>
-</div>
-<div>8. Krümmung:
-  <hr>
-  <div>
-    {% for intervalle in calc.krümmungWert %}
-      <p>
-        {% for infos in intervalle %}
-          <span>{{ infos }}</span>
-        {% endfor %}
-      </p>
-    {% endfor %}
-  </div>
-</div>
-{% if calc.tangente %}
-  <div>9. Tangenge an der stelle {{ calc.x_stelle_der_tangente }}:
+  <div><p>1. Ableitung: <span>{{ calc.setze_erste_ableitung }}</span></p></div>
+  <div><p>2. Ableitung: <span>{{ calc.setze_zweite_ableitung }}</span></p></div>
+  <div>4. Nullstellen:
     <hr>
     <div>
       <p>
-        <span>{{ calc.setze_tangen }}</span>
+        {% for nullstelle in calc.null_stellen %}
+          <span>{{ nullstelle }}</span>
+        {% endfor %}
+      <p>{{ calc.null_stellen.0.0 }}</p>
       </p>
     </div>
   </div>
-  <input id="tang" hidden type="text" value="{{ calc.setze_tangen }}">
+  <div>5. Extremwerte:
+    <hr>
+    <div>
+      {% for extrem_punkt in calc.extrem_punkte %}
+        <p>
+          {% for punkt_bestandteil in extrem_punkt %}
+            <span>{{ punkt_bestandteil }}</span>
+          {% endfor %}
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+  <div>6. Wendepunkte:
+    <hr>
+    <div>
+      {% for wende_punkt in calc.wende_punkte %}
+        <p>
+          {% for punkt_bestandteil in wende_punkt %}
+            <span>{{ punkt_bestandteil }}</span>
+          {% endfor %}
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+  <div>7. Monotonie
+    <hr>
+    <div>
+      {% for intervalle in calc.monotonieWert %}
+        <p>
+          {% for infos in intervalle %}
+            <span>{{ infos }}</span>
+          {% endfor %}
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+  <div>8. Krümmung:
+    <hr>
+    <div>
+      {% for intervalle in calc.krümmungWert %}
+        <p>
+          {% for infos in intervalle %}
+            <span>{{ infos }}</span>
+          {% endfor %}
+        </p>
+      {% endfor %}
+    </div>
+  </div>
+  {% if calc.tangente %}
+    <div>9. Tangenge an der stelle {{ calc.x_stelle_der_tangente }}:
+      <hr>
+      <div>
+        <p>
+          <span>{{ calc.setze_tangen }}</span>
+        </p>
+      </div>
+    </div>
+    <input id="tang" hidden type="text" value="{{ calc.setze_tangen }}">
+  {% endif %}
 {% endif %}
