@@ -12,8 +12,8 @@
 </div>
 Ableitungen
 <hr>
-<div><p>1. Ableitung: <span>{{ calc.f1 }}</span></p></div>
-<div><p>2. Ableitung: <span>{{ calc.f2 }}</span></p></div>
+<div><p>1. Ableitung: <span>{{ calc.setze_erste_ableitung }}</span></p></div>
+<div><p>2. Ableitung: <span>{{ calc.setze_zweite_ableitung }}</span></p></div>
 <div>4. Nullstellen:
   <hr>
   <div>
@@ -81,4 +81,5 @@ Ableitungen
       </p>
     </div>
   </div>
+  <input id="tang" hidden type="text" value="{{ calc.setze_tangen }}">
 {% endif %}

@@ -35,7 +35,6 @@ class Calc:
         self.f = f
         return f
 
-    # Todo fix
     def gebe_exponenten_zurück(self, function):
         terms = function.as_ordered_terms()
         exponents = [term.as_poly(self.x).degree() for term in terms]
@@ -178,3 +177,9 @@ class Calc:
 
     def setze_tangen(self):
         return sum(x for x in self.tangente)
+
+    def setze_erste_ableitung(self):
+        return str(self.f1).replace('**', '^')
+
+    def setze_zweite_ableitung(self):
+        return str(self.f2).replace('**', '^')
