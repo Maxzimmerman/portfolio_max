@@ -95,7 +95,7 @@
             };
 
             Plotly.newPlot('plot', [trace, trace2], layout);
-          }, 500); // 2000 milliseconds = 2 seconds
+          }, 1000); // 2000 milliseconds = 2 seconds
         } catch (error) {
           console.error("Error plotting function:", error);
           alert("Invalid expression. Please enter a valid mathematical expression.");
