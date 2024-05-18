@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container body">
+    <h1>Integral Rechner</h1>
+
+    <form class="choose-integral" hx-post="{% url 'integral' %}" hx-target="#input-function">
+      {% csrf_token %}
+      <p>Es kann nur eine Option gewählt werden</p>
+      <div>Integral ohne gegebenes Intervall <input name="normalwithout" type="checkbox"></div>
+      <div>Integral mit gegebenes Intevall <input name="normal" type="checkbox"></div>
+      <div>Integral zwischen zwei Graphen <input name="between" type="checkbox"></div>
+      <div>Eine Integralgrenze berechnen <input name="ingegralborder" type="checkbox"></div>
+      <div>Das C eines unbestimmten Integrals ermitteln <input name="c" type="checkbox"></div>
+      <button class="btn btn-primary" type="submit">Wähle</button>
+    </form>
+  </div>
+
+  <div id="result"></div>
+
+  <div id="input-function">
+
+  </div>
+{% endblock %}

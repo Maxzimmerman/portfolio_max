@@ -15,6 +15,7 @@ urlpatterns = [
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
     path("", include("kurvendiskussion.urls")),
+    path("", include("integralcalc.urls"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
