@@ -28,14 +28,15 @@ def between(function_one: Add, function_two: Add) -> int:
     return area
 
 
-def with_one_interval_border(function: Add, first_limit: float, area: float) -> list:
+def with_one_interval_border(function: Add, first_limit: float, area: float) -> int:
     b, x = symbols('b x')
     integral = integrate(function)
     r = [x for x in solve(Eq(integral.subs(x, b) - (integral.subs(x, first_limit)), area)) if x.is_real]
-    return r
+    return sum(r)
 
 
-def calc_c(function: Add, point: dict) -> Mul:
+def calc_c(function: Add, point: dict) -> int:
+    print(function, point)
     c, x = symbols('c x')
     integral = integrate(function) + c
     result = solve(Eq(integral.subs(x, next(iter(point))), point[next(iter(point))]))

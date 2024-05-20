@@ -1,1 +1,5 @@
-<h1>Interval Border</h1>
+{% if error %}
+  <h1 class="text-danger">{{ error }}</h1>
+{% else %}
+  <h1>Intervalgrenze {{ result }} </h1>
+{% endif %}

@@ -1,1 +1,5 @@
-<h1>C</h1>
+{% if error %}
+  <h1 class="text-danger">{{ error }}</h1>
+{% else %}
+  <h1>C: {{ result }} </h1>
+{% endif %}
