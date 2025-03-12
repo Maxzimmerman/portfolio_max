@@ -1,6 +1,6 @@
 from django.urls import path
-from django.views.generic import TemplateView
+from .views import index
 
 urlpatterns = [
-    path("test", TemplateView.as_view(template_name="test"))
+    path("portfolio", index, name="portfolio"),
 ]
