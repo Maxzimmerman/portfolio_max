@@ -4,7 +4,7 @@
 DJANGO_SETTINGS_MODULE=config.settings.production
 DJANGO_SECRET_KEY=0pvwa8nhqt)5!%s&urxx0*ml=ek+g4(zc^7=t(u4r65j)&+az)
 DJANGO_ADMIN_URL=fejioawgurhgiureuhewfifw
-DJANGO_ALLOWED_HOSTS=max-zimmerman.online
+DJANGO_ALLOWED_HOSTS=.max-zimmermann.online
 
 # admin = max-zimmerman.online/fejioawgurhgiureuhewfifw/
 
